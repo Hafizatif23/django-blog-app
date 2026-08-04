@@ -1,0 +1,139 @@
+{% extends 'GeneralBlogApp/base.html' %}
+
+{% block title %}
+{{ post.title }}
+{% endblock %}
+
+{% block content %}
+
+<article class="single-post">
+
+    {% if post.image %}
+    <div class="single-post-image">
+        <img src="{{ post.image.url }}" alt="{{ post.title }}">
+    </div>
+    {% endif %}
+
+    <div class="single-post-content">
+
+        <span class="category-badge">
+            {{ post.category }}
+        </span>
+
+        <h1 class="single-post-title">
+            {{ post.title }}
+        </h1>
+
+        <div class="post-meta">
+
+            <span>👤 {{ post.author }}</span>
+
+            <span>📅 {{ post.date }}</span>
+
+        </div>
+
+        <div class="post-text">
+
+            {{ post.content|linebreaks }}
+
+        </div>
+
+        {% if user == post.author %}
+        <div class="post-actions">
+
+            <a href="{% url 'edit_post' post.id %}" class="btn btn-primary">
+                Edit
+            </a>
+
+            <form action="{% url 'delete_post' post.id %}" method="POST">
+
+                {% csrf_token %}
+
+                <button type="submit" class="btn btn-danger">
+                    Delete
+                </button>
+
+            </form>
+
+        </div>
+        {% endif %}
+
+    </div>
+
+</article>
+
+
+
+<section class="comments-section">
+
+    <h2>Comments</h2>
+
+    {% for comment in comments %}
+
+        <div class="comment-card">
+
+            <div class="comment-author">
+                {{ comment.author }}
+            </div>
+
+            <div class="comment-content">
+                {{ comment.content|linebreaks }}
+            </div>
+
+        </div>
+
+    {% empty %}
+
+        <p class="no-comments">
+            No comments yet.
+        </p>
+
+    {% endfor %}
+
+
+    {% if user.is_authenticated %}
+
+    <div class="comment-form">
+
+        <h3>Leave a Comment</h3>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <label for="comment">
+                Comment
+            </label>
+
+            <textarea
+                id="comment"
+                name="comment"
+                placeholder="Write your comment..."
+                rows="5"
+            ></textarea>
+
+            <button type="submit" class="btn btn-primary">
+                Publish
+            </button>
+
+        </form>
+
+    </div>
+
+    {% else %}
+
+        <p class="login-message">
+
+            Please
+            <a href="{% url 'login' %}">
+                login
+            </a>
+            to write a comment.
+
+        </p>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends 'GeneralBlogApp/base.html' %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+
+<section class="posts-section">
+
+    <div class="section-header">
+        <h2>Latest Posts</h2>
+        <p>Read the latest articles from our community.</p>
+    </div>
+
+    {% for post in posts %}
+
+    <article class="post-card">
+
+        {% if post.image %}
+        <div class="post-image">
+
+            <a href="{% url 'post_detail' post.id %}">
+                <img src="{{ post.image.url }}" alt="{{ post.title }}">
+            </a>
+
+        </div>
+        {% endif %}
+
+        <div class="post-body">
+
+            <span class="category-badge">
+                {{ post.category }}
+            </span>
+
+            <h3 class="post-title">
+
+                <a href="{% url 'post_detail' post.id %}">
+                    {{ post.title }}
+                </a>
+
+            </h3>
+
+            <div class="post-meta">
+
+                <span>
+                    👤 {{ post.author }}
+                </span>
+
+                <span>
+                    📅 {{ post.date }}
+                </span>
+
+            </div>
+
+            <p class="post-excerpt">
+                {{ post.content|truncatewords:30 }}
+            </p>
+
+            <a href="{% url 'post_detail' post.id %}" class="btn btn-primary">
+                Read More
+            </a>
+
+        </div>
+
+    </article>
+
+    {% empty %}
+
+    <div class="empty-posts">
+
+        <h3>No Posts Yet</h3>
+
+        <p>
+            Be the first one to publish an article.
+        </p>
+
+    </div>
+
+    {% endfor %}
+
+</section>
+
+{% endblock %}

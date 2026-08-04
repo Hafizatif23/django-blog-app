@@ -1,0 +1,92 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}
+        General Blog
+        {% endblock %}
+    </title>
+
+    <link rel="stylesheet" href="{% static 'GeneralBlogApp/style.css' %}">
+</head>
+
+<body>
+
+    <header class="header">
+
+        <div class="container navbar">
+
+            <h1 class="logo">
+                <a href="{% url 'home' %}">
+                    General Blog
+                </a>
+            </h1>
+
+            <nav class="nav-links">
+
+                <a href="{% url 'home' %}">Home</a>
+
+                {% if user.is_authenticated %}
+
+                    <span class="welcome">
+                        Welcome, {{ user.username }}
+                    </span>
+
+                    <a href="{% url 'write_post' %}" class="btn btn-primary">
+                        Write Post
+                    </a>
+
+                    <form action="{% url 'logout' %}" method="post" class="logout-form">
+
+                        {% csrf_token %}
+
+                        <button type="submit" class="btn btn-outline">
+                            Logout
+                        </button>
+
+                    </form>
+
+                {% else %}
+
+                    <a href="{% url 'login' %}" class="btn btn-primary">
+                        Login
+                    </a>
+
+                {% endif %}
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <main class="container main-content">
+
+        {% block content %}
+        {% endblock %}
+
+    </main>
+
+
+    <footer class="footer">
+
+        <div class="container">
+
+            <p>
+                © 2026 General Blog. All Rights Reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+</body>
+
+</html>

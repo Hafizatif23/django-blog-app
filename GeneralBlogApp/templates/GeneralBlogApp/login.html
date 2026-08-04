@@ -1,0 +1,64 @@
+{% extends 'GeneralBlogApp/base.html' %}
+
+
+{% block title %}
+Login
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<section class="auth-section">
+
+
+    <div class="auth-card">
+
+
+        <h1>
+            Welcome Back
+        </h1>
+
+
+        <p class="auth-subtitle">
+            Login to manage your blog posts.
+        </p>
+
+
+
+        <form method="POST">
+
+
+            {% csrf_token %}
+
+
+            <div class="django-form">
+
+                {{ form.as_p }}
+
+            </div>
+
+
+
+            <button 
+                type="submit"
+                class="btn btn-primary auth-button">
+
+                Login
+
+            </button>
+
+
+
+        </form>
+
+
+    </div>
+
+
+</section>
+
+
+
+{% endblock %}
