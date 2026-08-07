@@ -17,20 +17,31 @@ Including another URLconf
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import path
-from GeneralBlogApp.views import home, post_detail, write_post, delete_post, edit_post
+from GeneralBlogApp.views import home, post_detail, write_post, delete_post, edit_post, signup, delete_comment
 from django.conf.urls.static import static
 from django.conf import settings
+from GeneralBlogApp.views import PostListApi, PostDetailApi, CommentListApi, CommentDetailApi
+from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home , name='home'),
-    path('post/<int:post_id>/', post_detail, name='post_detail' ),
+    path('post/<int:pk>/', post_detail, name='post_detail' ),
     path('write/', write_post, name='write_post'),
-    path('post/<int:post_id>/edit/', edit_post, name='edit_post'),
-    path('post/<int:post_id>/delete/', delete_post, name='delete_post'),
+    path('post/<int:pk>/edit/', edit_post, name='edit_post'),
+    path('post/<int:pk>/delete/', delete_post, name='delete_post'),
+    path('comment/<int:pk>/delete/', delete_comment, name='delete_comment'),
 
     path('login/', auth_views.LoginView.as_view(template_name = 'GeneralBlogApp/login.html'), name='login' ),
-    path('logout/', auth_views.LogoutView.as_view(next_page = 'home'), name='logout' )
+    path('signup/', signup, name='signup'),
+    path('logout/', auth_views.LogoutView.as_view(next_page = 'home'), name='logout' ),
+
+    path('api/posts/', PostListApi.as_view(), name='posts_api'),
+    path('api/posts/<int:pk>/', PostDetailApi.as_view(), name='post_detail_api'),
+    path('api/login/', obtain_auth_token, name='api_login'),
+
+    path('api/comments/', CommentListApi.as_view(), name='comments_api'),
+    path('api/comments/<int:pk>/', CommentDetailApi.as_view(), name='comment_detail_api')
 ]
 
 

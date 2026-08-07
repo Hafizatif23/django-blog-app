@@ -77,9 +77,19 @@
             </div>
 
             <div class="comment-content">
-                {{ comment.content|linebreaks }}
+                {{ comment.text|linebreaks }}
             </div>
+            {% if user == comment.author or user == comment.post.author %}
+            <form action="{% url 'delete_comment' comment.id %}" method="POST">
 
+                {% csrf_token %}
+
+                <button type="submit" class="btn btn-danger">
+                    Delete
+                </button>
+
+            </form>
+            {% endif %}
         </div>
 
     {% empty %}

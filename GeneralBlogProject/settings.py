@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'GeneralBlogApp'
+    'GeneralBlogApp',
+    'rest_framework',
+    'rest_framework.authtoken'
 ]
 
 MIDDLEWARE = [
@@ -122,3 +124,11 @@ LOGIN_URL = 'login'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR/'media'
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication', # Optional: keeps browser login working
+    ],
+}
