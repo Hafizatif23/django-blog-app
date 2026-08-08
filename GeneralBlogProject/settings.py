@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'GeneralBlogApp',
     'rest_framework',
     'rest_framework.authtoken',
-    'cloudinary_storage',
     'django.contrib.staticfiles',
     'cloudinary'
 ]
