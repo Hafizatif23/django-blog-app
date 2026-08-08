@@ -40,7 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'GeneralBlogApp',
     'rest_framework',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    'cloudinary_storage',
+    'django.contrib.staticfiles',
+    'cloudinary'
 ]
 
 MIDDLEWARE = [
@@ -139,3 +142,12 @@ REST_FRAMEWORK = {
 
 
 CSRF_TRUSTED_ORIGINS = ['https://django-blog-app-production-58e4.up.railway.app']
+
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME' : os.environ.get(''),
+    'API_KEY' : os.environ.get(''),
+    'API_SECRET' :  os.environ.get('')
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
