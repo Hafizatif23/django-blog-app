@@ -136,3 +136,6 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication', # Optional: keeps browser login working
     ],
 }
+
+
+CSRF_TRUSTED_ORIGINS = ['https://django-blog-app-production-58e4.up.railway.app']
