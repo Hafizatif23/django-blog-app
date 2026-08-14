@@ -59,3 +59,14 @@ This project took me from basic CRUD to real production engineering. Beyond Djan
 | `/api/comments/` | GET, POST | Read: public · Write: token required |
 | `/api/comments/<id>/` | GET, PUT, DELETE | Read: public · Write: comment or post author |
 | `/api/login/` | POST | Returns auth token for valid credentials |
+
+
+## Testing
+Includes unit tests (Django's `TestCase`) covering core authentication and permission logic:
+- Authenticated users can create posts; unauthenticated users cannot
+- Non-authors are blocked from deleting posts they don't own
+
+Run tests with:
+```
+python manage.py test
+```

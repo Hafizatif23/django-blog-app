@@ -1,4 +1,5 @@
 from django.shortcuts import render,redirect, get_object_or_404
+from django.core.exceptions import PermissionDenied
 from .models import Post,Comment
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
@@ -80,7 +81,7 @@ def delete_post(request, pk):
     post = get_object_or_404(Post, id = pk)
 
     if post.author != request.user:
-         return redirect('post_detail', pk = post.id)
+         raise PermissionDenied
     
     if request.method == 'POST':
         post.delete()
